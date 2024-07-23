@@ -1,0 +1,65 @@
+# Question 1 
+# Task 1 
+
+# budget_category.py
+
+class BudgetCategory:
+    """
+    A class to represent a budget category.
+    
+    Attributes:
+    ----------
+    __name : str
+        The name of the budget category.
+    __budget : float
+        The allocated budget for the category.
+    __expenses : list
+        A list to track expenses in the category.
+    """
+    
+    def __init__(self, name, budget):
+        self.__name = name  # Private attribute
+        self.__budget = budget  # Private attribute
+        self.__expenses = []
+
+    # Getter for category name
+    def get_name(self):
+        return self.__name
+
+    # Setter for category name
+    def set_name(self, name):
+        self.__name = name
+
+    # Getter for allocated budget
+    def get_budget(self):
+        return self.__budget
+
+    # Setter for allocated budget with validation
+    def set_budget(self, budget):
+        if budget < 0:
+            raise ValueError("Budget cannot be negative.")
+        self.__budget = budget
+
+    # Method to add an expense to the category
+    def add_expense(self, amount):
+        if amount < 0:
+            raise ValueError("Expense cannot be negative.")
+        if amount > self.__budget:
+            raise ValueError("Expense cannot exceed the budget.")
+        self.__expenses.append(amount)
+        self.__budget -= amount
+
+    # Method to display the budget category details
+    def display_category_summary(self):
+        spent = sum(self.__expenses)
+        remaining_budget = self.__budget
+        print(f"Category: {self.__name}")
+        print(f"Allocated Budget: {self.get_budget() + spent}")
+        print(f"Spent: {spent}")
+        print(f"Remaining Budget: {remaining_budget}")
+
+# Example usage
+if __name__ == "__main__":
+    food_category = BudgetCategory("Food", 500)
+    food_category.add_expense(100)
+    food_category.display_category_summary()
